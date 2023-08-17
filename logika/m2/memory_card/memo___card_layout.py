@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
         QHBoxLayout, QVBoxLayout, 
         QGroupBox, QButtonGroup, QRadioButton,  
         QPushButton, QLabel, QSpinBox)
-
+app = QApplication([])
 
 
 btm_menu = QPushButton("Меню")
@@ -18,7 +18,7 @@ btn_Ok = QPushButton("Відповісти")
 
 lb_Question = QLabel('')
 
-box_minutes = QPushButton()
+box_minutes = QSpinBox()
 box_minutes.setValue(5)
 
 RadioGroupBox = QGroupBox("Варіанти відповідей")
@@ -53,10 +53,38 @@ lb_Result = QLabel('')
 lb_Correct = QLabel('')
 
 layout_res = QVBoxLayout()
-layout_res.addWidget(lb_Result, aligament=(Qt.Alignleft | Qt.AlignTop))
-layout_res.addWidget(lb_Result, aligament=(Qt.AlignHCenter ))
+layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
+layout_res.addWidget(lb_Result, alignment=(Qt.AlignHCenter ))
 AnsGroupBox.setLayout(layout_res)
 AnsGroupBox.hide()
+
+layout_line1 = QHBoxLayout()
+layout_line2 = QHBoxLayout()
+layout_line3 = QHBoxLayout()
+layout_line4 = QHBoxLayout()
+
+layout_line1.addWidget(btm_menu)
+layout_line1.addStretch(1)
+layout_line1.addWidget(btn_sleep)
+layout_line1.addWidget(box_minutes)
+layout_line1.addWidget(QLabel('хвилина'))
+
+layout_line2.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignTop))
+
+layout_line3.addWidget(RadioGroupBox)
+layout_line3.addWidget(AnsGroupBox)
+layout_line4.addStretch(1)
+layout_line4.addWidget(btn_Ok)
+layout_line4.addStretch(1)
+
+layout_card = QVBoxLayout()
+layout_card.addLayout(layout_line1)
+layout_card.addLayout(layout_line2)
+layout_card.addLayout(layout_line3)
+layout_card.addStretch(1)
+layout_card.addLayout(layout_line4, stretch=1)
+layout_card.addStretch(1)
+layout_card.addStretch(5)
 
 def show_result():
     ''' показати панель відповідей '''
