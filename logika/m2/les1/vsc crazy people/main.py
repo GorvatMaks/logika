@@ -8,13 +8,14 @@ main_window = QWidget()
 
 button = QPushButton("Згенерувати")
 text = QLabel("Натисни щоб дізнатися переможця")
-winer = QLabel("?")
 
 
 line = QVBoxLayout()
 line.addWidget(text, alignment=Qt.AlignCenter)
 line.addWidget(winer, alignment=Qt.AlignCenter)
 line.addWidget(button, alignment=Qt.AlignCenter)
+
+winer = QLabel("?")
 
 def win():
     ran = randint(1, 1000)
