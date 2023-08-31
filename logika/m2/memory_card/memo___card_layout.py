@@ -88,8 +88,22 @@ layout_card.addStretch(5)
 
 def show_result():
     ''' показати панель відповідей '''
-    pass
+    RadioGroupBox.hide()
+    AnsGroupBox.show()
+    btn_Ok.setText('Наступне питання')
+
 
 def show_question():
-    ''' показати панель запитань '''
-    pass
+    ''' показати панель питань '''
+    RadioGroupBox.show()
+    AnsGroupBox.hide()
+    btn_Ok.setText('Відповісти')
+    # скинути вибрану радіо-кнопку
+    # зняли обмеження, щоб можна було скинути вибір радіокнопки
+    RadioGroup.setExclusive(False)
+    rbtn_1.setChecked(False)
+    rbtn_2.setChecked(False)
+    rbtn_3.setChecked(False)
+    rbtn_4.setChecked(False)
+    # повернули обмеження, тепер лише одна радіокнопка може бути вибрана
+    RadioGroup.setExclusive(True)
