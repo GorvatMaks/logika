@@ -29,6 +29,21 @@ timer = QTimer()
 win_main = QWidget()
 win_card = QWidget()
 
+win_main.setStyleSheet('''
+                        background-color: black;
+                        color: white;
+                        font-size: 20px;
+                        border: 2px solid white; 
+                        ''')
+
+win_card.setStyleSheet('''
+                        background-color: black;
+                        color: white;
+                        font-size: 20px;
+                        border: 2px solid red; 
+                        ''')
+
+lb_Result.setStyleSheet('margin: 2')
 
 # Тестові данні
 def testlist():
