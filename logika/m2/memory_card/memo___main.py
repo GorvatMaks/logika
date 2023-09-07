@@ -43,7 +43,7 @@ win_card.setStyleSheet('''
                         border: 2px solid red; 
                         ''')
 
-lb_Result.setStyleSheet('margin: 2')
+lb_Result.setStyleSheet('margin: 20px')
 
 # Тестові данні
 def testlist():
@@ -55,6 +55,14 @@ def testlist():
     frm = Question('Мишка', 'mouse', 'mouth', 'muse', 'museum')
     questions_listmodel.form_list.append(frm)
     frm = Question('Число', 'number', 'digit', 'amount', 'summary')
+    questions_listmodel.form_list.append(frm)
+    frm = Question('Один', 'one', 'apple', 'pinapple', 'Logika')
+    questions_listmodel.form_list.append(frm)
+    frm = Question('Море', 'sea', 'horse', 'Hyrluk', 'cs')
+    questions_listmodel.form_list.append(frm)
+    frm = Question("Сім`я", 'Family', 'dota 2', 'skola', 'museum')
+    questions_listmodel.form_list.append(frm)
+    frm = Question('З днем народженням!', ' Happy Birthday', 'Назара', 'summer', 'summary')
     questions_listmodel.form_list.append(frm)
 
 # Функції для проведення тесту
