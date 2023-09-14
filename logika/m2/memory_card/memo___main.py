@@ -38,7 +38,7 @@ win_main.setStyleSheet('''
 
 win_card.setStyleSheet('''
                         background-color: black;
-                        color: white;
+                        color: green;
                         font-size: 20px;
                         border: 2px solid red; 
                         ''')
