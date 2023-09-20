@@ -16,3 +16,7 @@ with open("cpusoc.txt", 'r', encoding= 'utf-8') as file:
 for student in students:
     if student.grade == 5:
         print(student.surname)
+
+    normal_grades = sum(student.grade for student in students)
+    qq_grade = normal_grades/len(students) if students else 0
+    print(f"Суредня оцінка: {qq_grade:.2f}")
