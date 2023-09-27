@@ -30,8 +30,8 @@ layout_notes = QHBoxLayout()
 col1 = QVBoxLayout()
 col2 = QVBoxLayout()
 
-layout_notes.addLayout(col1)
-layout_notes.addLayout(col2)
+layout_notes.addLayout(col1, stretch=2)
+layout_notes.addLayout(col2, stretch=1)
 
 col1.addWidget(field_text)
 
@@ -43,14 +43,15 @@ row1.addWidget(btn_note_crete)
 row1.addWidget(btn_note_delete)
 row1.addWidget(btn_note_save)
 
-row2 = QVBoxLayout()
+
+row2 = QHBoxLayout()
 row2.addWidget(btn_note_add_teg)
 row2.addWidget(btn_note_unf_teg)
 row2.addWidget(btn_note_scr_teg)
-row2.addWidget(Ib_tag)
-row2.addWidget(list_teg)
 
 col2.addLayout(row2)
+col2.addWidget(Ib_tag)
+col2.addWidget(list_teg)
 col2.addLayout(row1)
 #НАЗАР КУ
 
