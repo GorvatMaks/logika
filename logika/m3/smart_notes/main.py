@@ -29,7 +29,7 @@ list_teg = QListWidget()
 field_text1 = QLineEdit("")
 btn_note_add_teg = QPushButton('Добавити_teg')
 btn_note_unf_teg = QPushButton('Відкріпити_teg')
-btn_note_scr_teg = QPushButton('Пошук_teg')
+btn_note_scr_teg = QPushButton('Пошук за тегом')
 
 layout_notes = QHBoxLayout()
 col1 = QVBoxLayout()
@@ -102,12 +102,69 @@ def del_note():
         lst_notes.clear()
 
         lst_notes.addItems(notes)
-        writeToFile
+        writeToFile()
+
+def add_teg():
+    key = lst_notes.currentItem().text()
+    
+    teg_input = field_text1.text()
+
+    notes[key]['теги'].append(teg_input)
+
+    list_teg.addItem(teg_input)
+    writeToFile()
+
+def del_teg():
+    key = lst_notes.currentItem().text()
+    lis_teg = list_teg.currentItem().text()
+
+    notes[key]['теги'].remove(lis_teg)
+    list_teg.clear()
+    
+    list_teg.addItems(notes[key]['теги'])
+    writeToFile()
+
+def serch_teg():
+    tag = field_text1.text()
+
+    if btn_note_scr_teg.text() == 'Пошук за тегом':
+        filter_notes = {}
+
+        for key in notes:
+            if tag in notes[key]['теги']:
+                filter_notes[key] = notes[key]
+       
+        btn_note_scr_teg.setText('Скинути пошук')
+        
+        lst_notes.clear()
+        lst_notes.addItems(filter_notes)
+
+
+        list_teg.clear()
+
+    elif btn_note_scr_teg.text() =='Скинути пошук':
+        btn_note_scr_teg.setText('Пошук за тегом')
+        
+        field_text.clear()
+        lst_notes.clear()
+        list_teg.clear()
+        field_text1.clear()
+
+        lst_notes.addItems(notes)
+
+btn_note_add_teg.clicked.connect(add_teg)
+btn_note_unf_teg.clicked.connect(del_teg)
+btn_note_scr_teg.clicked.connect(serch_teg)
+
+
 lst_notes.itemClicked.connect(show_note)
 btn_note_crete.clicked.connect(add_note)
 btn_note_save.clicked.connect(seve_note)
 btn_note_delete.clicked.connect(del_note)
 lst_notes.addItems(notes)
+
+
+
 
 
 
