@@ -10,6 +10,7 @@ import os
 add = QApplication([])
 window = QWidget()
 
+btn_coler=QPushButton("Зміна Дезайну на ч\б")
 btn_folder=QPushButton("Папка")
 btn_left= QPushButton("Ліворуч")
 btn_right= QPushButton("Параворуч")
@@ -30,6 +31,7 @@ line3 = QHBoxLayout()
 line4 = QVBoxLayout()
 
 
+line4.addWidget(btn_coler)
 line4.addWidget(btn_folder)
 line4.addWidget(lst_files)
 
@@ -45,12 +47,8 @@ line2.addLayout(line3)
 line_base.addLayout(line4 , 1)
 line_base.addLayout(line2 , 4)
 
-workdir = QFileDialog.getExistingDirectory()
 
-print(workdir)
 
-files = os.listdir(workdir)
-print(files)
 
 def filter(filenames):
     result = []
@@ -64,7 +62,71 @@ def filter(filenames):
 
     return result
 
-print(filter(files))
+#print(filter(files))
+
+def showFiles():
+    global workdir
+    workdir = QFileDialog.getExistingDirectory()
+    files = os.listdir(workdir)
+
+    graphic = filter(files)
+
+    lst_files.clear()
+    lst_files.addItems(graphic)
+
+class ImageProcessor():
+    def __init__(self):
+        self.original = None
+        self.filename = None
+        self.save_dir = 'Modified/'
+    
+    def load_image(self, filename):
+        self.filename = filename
+
+        full_path = os.path.join(workdir , filename)
+
+        self.original = Image.open(full_path)
+
+    def show_image(self, path):
+        lb_kart.hide()
+
+        pixmapimage = QPixmap(path)
+        w, h = lb_kart.width(), lb_kart.height()
+        pixmapimage = pixmapimage.scaled(w , h, Qt.KeepAspectRatio)
+
+        lb_kart.setPixmap(pixmapimage)
+
+        lb_kart.show()
+
+    def saveAndShowImage(self):
+        path = os.path.join(workdir, self.save_dir)
+
+        if not (os.path.exists(path)) or os.path.isdir(path):
+            os.mkdir(path)
+        
+        image_path = os.path.join(path , self.filename )
+       
+        self.original.save()
+        self.show_image(image_path)
+        
+
+
+def showChosenItem():
+    filename = lst_files.currentItem().text()
+    workimage.load_image(filename)
+    
+    full_path = os.path.join(workdir , filename)
+    workimage.show_image(full_path)
+
+
+workimage = ImageProcessor()
+
+
+
+lst_files.currentRowChanged.connect(showChosenItem)
+
+btn_folder.clicked.connect(showFiles)
+
 window.setLayout(line_base)
 
 
