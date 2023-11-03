@@ -10,7 +10,7 @@ import os
 add = QApplication([])
 window = QWidget()
 
-btn_coler=QPushButton("Зміна Дезайну на ч\б")
+#btn_coler=QPushButton("Зміна Дезайну на ч\б")
 btn_folder=QPushButton("Папка")
 btn_left= QPushButton("Ліворуч")
 btn_right= QPushButton("Параворуч")
@@ -31,7 +31,7 @@ line3 = QHBoxLayout()
 line4 = QVBoxLayout()
 
 
-line4.addWidget(btn_coler)
+#line4.addWidget(btn_coler)
 line4.addWidget(btn_folder)
 line4.addWidget(lst_files)
 
@@ -101,14 +101,34 @@ class ImageProcessor():
     def saveAndShowImage(self):
         path = os.path.join(workdir, self.save_dir)
 
-        if not (os.path.exists(path)) or os.path.isdir(path):
+        if not (os.path.exists(path) or os.path.isdir(path)):
             os.mkdir(path)
         
         image_path = os.path.join(path , self.filename )
        
-        self.original.save()
+        self.original.save(image_path)
         self.show_image(image_path)
         
+    def do_bw(self):
+        self.original = self.original.convert("L")
+        self.saveAndShowImage()
+
+    def do_left(self):
+        self.original = self.original.transpose(Image.ROTATE_90)
+        self.saveAndShowImage()
+
+    def do_right(self):
+        self.original = self.original.transpose(Image.ROTATE_270)
+        self.saveAndShowImage()
+
+    def do_flip(self):
+        self.original = self.original.transpose(Image.FLIP_LEFT_RIGHT)
+        self.saveAndShowImage()
+
+    def do_sharp(self):
+        self.original = self.original.filter(ImageFilter.SHARPEN)
+        self.saveAndShowImage()
+
 
 
 def showChosenItem():
@@ -121,11 +141,18 @@ def showChosenItem():
 
 workimage = ImageProcessor()
 
-
-
 lst_files.currentRowChanged.connect(showChosenItem)
 
 btn_folder.clicked.connect(showFiles)
+
+btn_b_w.clicked.connect(workimage.do_bw)
+btn_left.clicked.connect(workimage.do_left)
+btn_right.clicked.connect(workimage.do_right)
+btn_rizk.clicked.connect(workimage.do_sharp)
+btn_zerk.clicked.connect(workimage.do_flip)
+
+
+
 
 window.setLayout(line_base)
 
