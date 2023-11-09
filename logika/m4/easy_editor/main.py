@@ -9,6 +9,12 @@ import os
 
 add = QApplication([])
 window = QWidget()
+window.setStyleSheet('''
+                        background-color: black;
+                        color: white;
+                        font-size: 20px;
+                        border: 1px solid white; 
+                        ''')
 
 #btn_coler=QPushButton("Зміна Дезайну на ч\б")
 btn_folder=QPushButton("Папка")
@@ -17,6 +23,59 @@ btn_right= QPushButton("Параворуч")
 btn_zerk = QPushButton("Дзеркало")
 btn_rizk= QPushButton("Різкість")
 btn_b_w= QPushButton("Ч/Б")
+
+btn_folder.setStyleSheet('''
+                        background-color: white;
+                        color: white;
+                        font-size: 20px;
+                        border: 2px solid white; 
+                        ''')
+
+btn_b_w.setStyleSheet('''
+                        background-color: grey;
+                        color: blue;
+                        font-size: 20px;
+                        border: 2px solid white; 
+                        ''')
+
+
+btn_folder.setStyleSheet('''
+                        background-color: red;
+                        color: black;
+                        font-size: 20px;
+                        border: 2px solid white; 
+                        ''')
+
+btn_left.setStyleSheet('''
+                        background-color: grey;
+                        color: black;
+                        font-size: 20px;
+                        border: 2px solid white; 
+                        ''')
+
+btn_right.setStyleSheet('''
+                        background-color: red;
+                        color: black;
+                        font-size: 20px;
+                        border: 2px solid white; 
+                        ''')
+
+btn_rizk.setStyleSheet('''
+                        background-color: red;
+                        color: green;
+                        font-size: 20px;
+                        border: 2px solid white; 
+                        ''')
+
+btn_zerk.setStyleSheet('''
+                        background-color: grey;
+                        color: yellow;
+                        font-size: 20px;
+                        border: 2px solid white; 
+                        ''')
+
+
+
 
 lst_files = QListWidget()
 

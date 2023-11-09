@@ -36,6 +36,7 @@ win_main.setStyleSheet('''
                         border: 2px solid white; 
                         ''')
 
+
 win_card.setStyleSheet('''
                         background-color: black;
                         color: green;
