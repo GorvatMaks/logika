@@ -1,4 +1,5 @@
 #створи гру "Лабіринт"!
+from typing import Any
 from pygame import *
 
 from pygame.transform import scale, flip
@@ -20,6 +21,33 @@ class GameSprite(sprite.Sprite):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
 
+class Player(GameSprite):
+    def update(self):
+        keys = key.get_pressed()
+        if keys[K_UP] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys[K_DOWN] and self.rect.y < win_height - 65:
+            self.rect.y += self.speed
+        if keys[K_LEFT] and self.rect.x > 5:
+            self.rect.x -= self.speed
+        if keys[K_RIGHT] and self.rect.x < win_width - 65:
+            self.rect.x += self.speed
+
+
+class Enemy(GameSprite):
+    direction = 'left'
+    def update(self):
+        if self.direction == 'left':
+            self.rect.x -= self.speed
+        else:
+            self.rect.x += self.speed
+        
+        if self.rect.x <= 450:
+            self.direction = "right"
+
+        if self.rect.x >= win_width - 120:
+            self.direction = "left"
+
 win_width = 700
 win_height = 500
 
@@ -27,9 +55,9 @@ window = display.set_mode((win_width, win_height))
 background = scale(load('background.jpg'), (win_width, win_height))
 
 
-player = GameSprite("hero.png", 5, win_height - 83, 7 )
-monster = GameSprite("cyborg.png",win_width - 120,win_height - 250, 2)
-
+player = Player("hero.png", 5, win_height - 83, 5 )
+monster = Enemy("cyborg.png",win_width - 120,win_height - 250, 7)
+treasure = GameSprite("treasure.png", win_width - 250, win_height - 350, 0 )
 
 
 
@@ -38,6 +66,7 @@ clock =time.Clock()
 FPS = 60 
 
 game = True
+finish = False
 
 mixer.init()
 mixer.music.load("jungles.ogg")
@@ -45,12 +74,20 @@ mixer.music.play()
 
 
 while game:
-    window.blit(background, (0, 0))
-    player.reset()
-    monster.reset()
     for e in event.get():
         if e.type == QUIT:
             game = False
+    
+    if not finish:
+        window.blit(background, (0, 0))
+        player.reset()
+        monster.reset()
+        treasure.reset()
+        player.update()
+        
+        monster.update()
 
-    display.update()
-    clock.tick(FPS)
+        treasure.update()
+
+        display.update()
+        clock.tick(FPS)
