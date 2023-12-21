@@ -7,10 +7,10 @@ from random import randint
 
 
 mixer.init()
-
 mixer.music.load("space.ogg")
 mixer.music.play(-1)
 mixer.music.set_volume(0.2)
+
 
 font.init()
 font1 = font.SysFont('Arial', 36)
@@ -37,6 +37,12 @@ class GameSprite(sprite.Sprite):
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
+class Bulet(GameSprite):
+    def update(self):
+        self.rect.y -= self.speed
+        if self.rect.y < 0:
+            self.kill()
+
 class Player(GameSprite):
     def update(self):
         keys = key.get_pressed()
@@ -46,7 +52,9 @@ class Player(GameSprite):
             self.rect.x += self.speed       
 
     def fire(self):
-        pass
+        bullet = Bulet('bullet.png', self.rect.centerx, self.rect.top, 15, 20,10)
+        bullets.add(bullet)
+
 
 class Enemy(GameSprite):
     def update(self):
@@ -63,6 +71,8 @@ backgroun = scale(load("galaxy.jpg"), (wind_wid, wind_hei))
 
 rocket = Player("rocket.png", 350, wind_hei - 100, 85, 100, 6)
 
+bullets = sprite.Group()
+
 ens = sprite.Group()
 for i in range(5):
     x = randint(0, wind_wid - 80)
@@ -73,6 +83,7 @@ for i in range(5):
 
     ens.add(mon)
 
+sound = mixer.Sound("fire.ogg")
 
 
 FPS = 60
@@ -84,7 +95,10 @@ while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
-    
+        if e.type == KEYDOWN:
+            if e.key == K_SPACE:
+                rocket.fire()
+                sound.play()
     if not finish:
         window.blit(backgroun, (0, 0))
         txt_lose = font1.render(f'Пропущен: {lost}', True, (255,53,43))
@@ -92,12 +106,14 @@ while game:
         txt_win = font2.render(f'Рахунок: {score}', True, (53,255,43))
         window.blit(txt_win, (10, 20))
 
+        bullets.draw(window)        
+        bullets.update()        
 
         ens.draw(window)
         ens.update()
 
         rocket.reset()
         rocket.update()
-    
+
     display.update()
     clock.tick(FPS)
