@@ -15,6 +15,7 @@ mixer.music.set_volume(0.2)
 font.init()
 font1 = font.SysFont('Arial', 36)
 font2 = font.SysFont('Arial', 36)
+font3 = font.SysFont('Arial', 36)
 
 
 
@@ -37,6 +38,8 @@ class GameSprite(sprite.Sprite):
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
+
+
 class Bulet(GameSprite):
     def update(self):
         self.rect.y -= self.speed
@@ -54,6 +57,7 @@ class Player(GameSprite):
     def fire(self):
         bullet = Bulet('bullet.png', self.rect.centerx, self.rect.top, 15, 20,10)
         bullets.add(bullet)
+            
 
 
 class Enemy(GameSprite):
@@ -90,7 +94,9 @@ FPS = 60
 clock = time.Clock()
 game = True
 finish = False
-
+global bule
+bule = 0
+    
 while game:
     for e in event.get():
         if e.type == QUIT:
@@ -99,12 +105,17 @@ while game:
             if e.key == K_SPACE:
                 rocket.fire()
                 sound.play()
+                bule = bule + 1
+
+
     if not finish:
         window.blit(backgroun, (0, 0))
         txt_lose = font1.render(f'Пропущен: {lost}', True, (255,53,43))
-        window.blit(txt_lose, (10, 50))
+        window.blit(txt_lose, (0, 30))
         txt_win = font2.render(f'Рахунок: {score}', True, (53,255,43))
-        window.blit(txt_win, (10, 20))
+        window.blit(txt_win, (0, 0))
+        txt_bule = font3.render(f'Патрони: {bule}', True, (41,86,99))
+        window.blit(txt_bule,(480, 0))
 
         bullets.draw(window)        
         bullets.update()        
