@@ -16,8 +16,11 @@ font.init()
 font1 = font.SysFont('Arial', 36)
 font2 = font.SysFont('Arial', 36)
 font3 = font.SysFont('Arial', 36)
+font4 = font.SysFont('Arial', 80)
 
-
+txt_g_lose = font4.render('You Lose', True, (255, 12 , 34))
+txt_g_wine = font4.render('You Wine', True, (25, 212 , 34))
+txt_gg_lose = font4.render('(ha-ha)', True, (5, 0 , 0))
 
 wind_wid = 700
 wind_hei = 500
@@ -25,6 +28,7 @@ window = display.set_mode((wind_wid, wind_hei))
 
 lost = 0 
 score = 0
+
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y,player_width, player_haight, player_speed):
         super().__init__()
@@ -71,7 +75,7 @@ class Enemy(GameSprite):
             self.rect.x = randint(0, wind_wid-80)
             lost = lost + 1
 
-backgroun = scale(load("galaxy.jpg"), (wind_wid, wind_hei))
+backgroun = scale(load("OIP (5).jpg"), (wind_wid, wind_hei))
 
 rocket = Player("rocket.png", 350, wind_hei - 100, 85, 100, 6)
 
@@ -125,6 +129,48 @@ while game:
 
         rocket.reset()
         rocket.update()
+        
+        if sprite.spritecollide(rocket, ens, False):
+            finish = True
+            window.blit(txt_g_lose, (30,200))
+            window.blit(txt_gg_lose, (400,200))
+
+
+        cola = sprite.groupcollide(ens, bullets, True, True)
+        for c in cola:
+            x = randint(0, wind_wid - 80)
+            y = 0
+            speed = randint(1,3)
+            mon = Enemy("ufo.png",x, y , 80, 50, speed)
+
+            ens.add(mon)
+            score = score + 1
+
+        if score == 20:
+            finish = True
+            window.blit(txt_g_wine, (190,200))
+    else:
+        finish = False
+        score = 0
+        lost = 0 
+        bule = 0
+
+        for b in bullets:
+            b.kill()
+    
+        for m in ens:
+            m.kill()
+
+        time.delay(3000)
+        
+        for i in range(5):
+            x = randint(0, wind_wid - 80)
+            y = 0
+            speed = randint(1,3)
+
+            mon = Enemy("ufo.png",x, y , 80, 50, speed)
+
+            ens.add(mon)            
 
     display.update()
     clock.tick(FPS)
